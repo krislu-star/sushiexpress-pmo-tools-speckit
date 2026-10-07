@@ -72,7 +72,7 @@ speckit-template/
 
 | 名稱 | 路徑 | Branch |
 |------|------|--------|
-| 爭鮮 PMO 儀表板（`Kiitzu/sushiexpress-pmo-tools-web`） | `frontend/` | `master` |
+| 爭鮮 PMO 儀表板（`krislu-star/sushiexpress-pmo-tools-web`） | `frontend/` | `master` |
 
 > 2026-10-07 起移除 `cms`、`backend`、`themebuilder` 三個 submodule。frontend 的 UI 元件是當初自 `cms@0a0a5e2c` 複製而來，不再需要 cms 原始碼。
 
@@ -81,7 +81,7 @@ speckit-template/
 > **重要**：只編輯 `.gitmodules` 不夠，必須用 `git submodule add` 才會寫入 git index。
 
 ```bash
-git submodule add git@github.com:Kiitzu/sushiexpress-pmo-tools-web.git frontend
+git submodule add git@github.com:krislu-star/sushiexpress-pmo-tools-web.git frontend
 git add .gitmodules frontend
 git commit -m "chore: add frontend submodule"
 ```

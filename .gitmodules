@@ -1,4 +1,4 @@
 [submodule "frontend"]
 	path = frontend
-	url = git@github.com:Kiitzu/sushiexpress-pmo-tools-web.git
+	url = git@github.com:krislu-star/sushiexpress-pmo-tools-web.git
 	branch = master
