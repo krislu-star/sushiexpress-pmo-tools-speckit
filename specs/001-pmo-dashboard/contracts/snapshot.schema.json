@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sushi-pmo/snapshot.schema.json",
+  "title": "爭鮮 IT 週報工作表快照",
+  "description": "由 snapshot:build CLI 從四個分頁的 CSV 產生，三個頁面於建置時讀取。見 plan.md 第 3、4 節。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "capturedAt", "spreadsheetId", "sheets"],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "capturedAt": {
+      "description": "工作表擷取日期（非案件更新日期）",
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "spreadsheetId": { "type": "string", "minLength": 1 },
+    "sheets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["Frontend", "Project", "BPM", "SAP"],
+      "properties": {
+        "Frontend": { "$ref": "#/$defs/sheet" },
+        "Project": { "$ref": "#/$defs/sheet" },
+        "BPM": { "$ref": "#/$defs/sheet" },
+        "SAP": { "$ref": "#/$defs/sheet" }
+      }
+    }
+  },
+  "$defs": {
+    "sheet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sheetId", "headers", "rows"],
+      "properties": {
+        "sheetId": { "description": "Google Sheets 分頁 gid", "type": "integer", "minimum": 0 },
+        "headers": {
+          "description": "原表標題列；欄位順序：S/N, Type, Project/Catalog, Issue/Follow-up Action Description, BPM單號, Priority, Raised by, Opened Date, Owned by, Due Date, LOG, Status, Note, Progress, 燈號（燈號欄原表可無標題）",
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 15,
+          "maxItems": 15
+        },
+        "rows": {
+          "description": "該分頁全部案件列；案件名稱（第 4 欄）為空的列由 CLI 略過；尾端空白欄位由 CLI 補成空字串，固定 15 欄",
+          "type": "array",
+          "items": { "$ref": "#/$defs/row" }
+        }
+      }
+    },
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceRow", "values"],
+      "properties": {
+        "sourceRow": { "description": "原表列號（標題列為 1）", "type": "integer", "minimum": 2 },
+        "values": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 15,
+          "maxItems": 15,
+          "prefixItems": [
+            { "description": "S/N" },
+            { "description": "Type → 工作類型" },
+            { "description": "Project/Catalog → 專案分類，空白為「未分類」" },
+            { "description": "Issue/Follow-up Action Description → 案件名稱", "minLength": 1 },
+            { "description": "BPM單號" },
+            { "description": "Priority (H/M/L)" },
+            { "description": "Raised by" },
+            { "description": "Opened Date" },
+            { "description": "Owned by → 負責人" },
+            { "description": "Due Date → 預計完成（保留原文字）" },
+            { "description": "LOG" },
+            { "description": "Status（原表 L 欄）" },
+            { "description": "Note（原表 M 欄）" },
+            { "description": "Progress：空白，或 0%～100% 的百分比（如 90%）", "pattern": "^(|\\d{1,3}%?)$" },
+            { "description": "燈號：空白，或 🔴 紅燈／🟡 黃燈／🟢 綠燈／⚪ 待評估（亦接受不含圖示的文字）" }
+          ]
+        }
+      }
+    }
+  }
+}

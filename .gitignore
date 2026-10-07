@@ -1,0 +1,17 @@
+.playwright-mcp
+.DS_Store
+
+# Environment files
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Claude Code 個人本機覆寫（團隊共用設定在 .claude/settings.json）
+.claude/settings.local.json
+
+# web-experience-audit skill 的產出
+audit/
+
+# 工作表原始 CSV 含真實案件資料，不進版控（轉換後快照在 frontend/data/snapshot.json）
+docs/*.csv

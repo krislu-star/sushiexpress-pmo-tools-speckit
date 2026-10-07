@@ -1,0 +1,44 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(bash .specify/scripts/bash/*)",
+      "Bash(gh issue *)",
+      "Bash(git *)",
+      "Bash(pip install playwright*)",
+      "Bash(pip3 install playwright*)",
+      "Bash(playwright install*)",
+      "Bash(python3 *)"
+    ],
+    "deny": [
+      "Bash(git push*)",
+      "Bash(git merge*)",
+      "Bash(sudo *)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~*)",
+      "Bash(rm -rf $HOME*)",
+      "Edit(//etc/**)",
+      "Edit(//usr/**)",
+      "Edit(//bin/**)",
+      "Edit(//sbin/**)",
+      "Edit(//var/**)",
+      "Edit(//System/**)",
+      "Edit(//Library/**)",
+      "Edit(~/.ssh/**)",
+      "Edit(~/.aws/**)",
+      "Edit(~/.gnupg/**)",
+      "Edit(~/.config/gh/**)",
+      "Edit(~/.zshrc)",
+      "Edit(~/.zprofile)",
+      "Edit(~/.bashrc)",
+      "Edit(~/.bash_profile)",
+      "Edit(~/.profile)",
+      "Edit(~/.claude/settings.json)",
+      "Edit(~/.claude/CLAUDE.md)",
+      "Edit(~/.claude/skills/**)",
+      "Edit(~/.claude/plugins/**)",
+      "Edit(./.agents/skills/**)",
+      "Edit(./.claude/skills/**)"
+    ]
+  }
+}

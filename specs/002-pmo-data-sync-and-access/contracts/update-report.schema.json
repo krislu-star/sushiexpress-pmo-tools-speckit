@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sushi-pmo/update-report.schema.json",
+  "title": "工作表更新報告",
+  "description": "每次排程或手動更新產出；寫入 Job Summary、附於 artifact，失敗或有警告時以 Email 寄出。見 plan ADR-006。不得包含任何 Secret。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["trigger", "startedAt", "finishedAt", "status", "capturedAt", "counts", "warnings", "errors"],
+  "properties": {
+    "trigger": { "enum": ["schedule", "manual"] },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "finishedAt": { "type": "string", "format": "date-time" },
+    "status": {
+      "description": "success：無警告；warning：已產出但有警告（如分頁缺欄）；failed：未產出",
+      "enum": ["success", "warning", "failed"]
+    },
+    "capturedAt": { "type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "counts": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["Frontend", "Project", "BPM", "SAP"],
+      "properties": {
+        "Frontend": { "type": "integer", "minimum": 0 },
+        "Project": { "type": "integer", "minimum": 0 },
+        "BPM": { "type": "integer", "minimum": 0 },
+        "SAP": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "errors": {
+      "description": "例：Project 分頁第 10 列 Progress「約九成」無法辨識，應為 0%～100%",
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
